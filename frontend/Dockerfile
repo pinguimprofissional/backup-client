@@ -1,18 +1,13 @@
-FROM node:18-alpine
-
+# Etapa 1 - build do frontend
+FROM node:18-alpine AS build
 WORKDIR /app
-
-# Copia apenas arquivos de dependência primeiro (para cache eficiente)
 COPY package*.json ./
-
-# Instala dependências (inclui vite)
 RUN npm install
-
-# Copia todo o código
 COPY . .
+RUN npm run build
 
-# Expõe porta do Vite
-EXPOSE 5173
-
-# Inicia em modo dev acessível externamente
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Etapa 2 - servidor Nginx
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
