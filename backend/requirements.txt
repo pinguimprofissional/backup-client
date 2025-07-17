@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+paramiko
+cryptography
+python-multipart
