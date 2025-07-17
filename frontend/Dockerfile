@@ -1,7 +1,18 @@
-FROM node:18
+FROM node:18-alpine
+
 WORKDIR /app
-COPY package.json .
+
+# Copia apenas arquivos de dependência primeiro (para cache eficiente)
+COPY package*.json ./
+
+# Instala dependências (inclui vite)
 RUN npm install
-COPY . /app
+
+# Copia todo o código
+COPY . .
+
+# Expõe porta do Vite
 EXPOSE 5173
-CMD ["npm", "run", "dev", "--", "--host"]
+
+# Inicia em modo dev acessível externamente
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
