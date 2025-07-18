@@ -1,12 +1,16 @@
-# etapa build
 FROM node:18-alpine AS build
 WORKDIR /app
-COPY package.json package-lock.json ./
+
+# copia só o package.json
+COPY package.json ./
+
 RUN npm install
+
+# copia o restante
 COPY . .
+
 RUN npm run build
 
-# etapa nginx
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
