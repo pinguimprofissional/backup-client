@@ -1,8 +1,8 @@
 export default function Dashboard() {
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold">Backup Client</h1>
-      <p className="mt-4">Escolha uma opção no menu.</p>
+    <div>
+      <h2 className="text-2xl font-bold mb-4">🏠 Dashboard</h2>
+      <p>Bem-vindo! Use o menu para realizar operações.</p>
     </div>
   )
 }
